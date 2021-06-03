@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Practica 1</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+      <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      
+      <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+      <style>
+            body{
+                  font-family: Georgia, 'Times New Roman', Times, serif;
+                  margin: 0px;
+                  padding: 0px;
+                  color:black;
+            }
+            img {
+            margin: 20px;
+            height: 50%;
+            width: 80%;
+            }
+            /* img {
+                  margin: 20px;
+                  height: 30%;
+                  width: 100%;
+            } */
+            #mapa {
+                  width: 100%;
+                  height: 500px;
+            }
+            .logged-in, .logged-out {
+            display: none;
+            }
+      </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="container">
+
+              <nav style="font-family: Georgia, 'Times New Roman', Times, serif;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                          <a class="navbar-brand" href="#">Niñeras viajeras</a>
+                          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                              <span class="navbar-toggler-icon"></span>
+                          </button>
+
+                          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                              <li class="nav-item logged-in">
+                                    <a class="nav-link" href="#" data-toggle="modal" data-target="#micuentamodal"> Mi cuenta </a>
+                              </li>
+                              <li class="nav-item logged-in">
+                                    <a class="nav-link" id="salir" href="#">Salir</a>
+                              </li>
+                              <li class="nav-item logged-in">
+                                    <a class="nav-link" href="#mapadeubicacion">Ubicación</a>
+                              </li>
+                              <li class="nav-item logged-out">
+                                    <a class="nav-link" href="#" data-toggle="modal" data-target="#ingresarmodal"> Ingresar </a>
+                              </li>
+                              <li class="nav-item logged-out">
+                                    <a class="nav-link" href="#" data-toggle="modal" data-target="#registratemodal"> Registro </a>
+                              </li>
+                            </ul>
+                        </div>
+                  </div>
+            </nav>
+            
+            <!-- Modal Ingresar -->
+            <div class="modal fade" id="ingresarmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> Ingresar </h5>
+                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+
+            <div class="modal-body">
+                  <form id="formaingresar">
+                  <div class="row">
+                  <div class="col-12 m-2">
+                  <input type="email" id="correo" class="form-control" placeholder="ingresa tu correo" required>
+            </div>
+            </div>
+
+                  <div class="row">
+                  <div class="col-12 m-2">
+                        <input type="password" id="contrasena" class="form-control" placeholder="ingresa tu contraseña" required>
+                  </div>
+                  </div>
+
+                  <div class="row">
+                  <div class="col-12 text-center">
+                        <button style="color: rgb(3, 3, 3);" class="btn btn-outline-secondary"> Ingresar </button>
+                        <p class="error text-danger"></p>
+                  </div>
+                  </div>
+                  </form>
+                      
+                  <div class="row">
+                  <div class="col-12 text-center">
+                        <span onclick="entrarGoogle()" class="btn btn-danger"> Ingresar con Google </span>
+                  </div>
+                  </div>
+                  </div>
+                  
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secundary" data-dismiss="modal"> Cerrar </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <!-- Modal Registro -->
+      <div class="modal fade" id="registratemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Registrate </h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+                    
+            <div class="modal-body">
+            <form id="formaregistrate">
+            <div class="row">
+            <div class="col-12 m-2">
+                  <input type="text" id="rnombre" class="form-control" placeholder="ingresa tu nombre" required>
+            </div>
+            </div>
+                  
+            <div class="row">
+            <div class="col-12 m-2">
+                  <input type="text" id="rcorreo" class="form-control" placeholder="ingresa tu correo" required>
+            </div>
+            </div>
+                  
+            <div class="row">
+            <div class="col-12 m-2">
+                  <input type="password" id="rcontrasena" class="form-control" placeholder="ingresa tu contraseña" required>
+            </div>
+            </div>
+                            
+            <div class="row">
+            <div class="col-12 m-2">
+                  <input type="number" step="any" id="rtelefono" class="form-control" placeholder="ingresa tu teléfono" required>
+            </div>
+            </div>
+                          
+            <div class="row">
+            <div class="col-12 m-2">
+                  <input type="text" id="rdireccion" class="form-control" placeholder="ingresa tu dirección" required>
+            </div>
+            </div>
+                            
+            <div class="row">
+            <div class="col-12 text-center">
+                  <input type="submit" style="color: rgb(3, 3, 3);" class="btn btn-outline-secondary" value="Registrarse">
+                  <p class="error text-danger"></p>
+            </div>
+            </div>
+            </form>
+            </div>
+                      
+            <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- Modal MiCuenta -->
+            <div class="modal fade" id="micuentamodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> Mi cuenta </h5>
+                  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body datosdelacuenta"> Info de la cuenta </div>
+            <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cerrar </button>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="container-fluid logged-in">
+                  <div class="container">
+                        <div class="row">
+                        <div class="col-12">
+                              <br>
+                              <h3> B I E N V E N I D O</h3>
+                              <p> 
+                                    Si estás buscando quien cuide a tus hijos, dejame decirte que estás en el lugar correcto!
+                                    Ya que te ofrecemos una variedad de niñeras para que cuide de tus pequeños mientras estás fuera de casa.
+                              </p>
+                        </div>
+                  </div>
+            </div>
+            
+            <div class="container">
+            <div class="row text-center" id="listadeniñeras">
+            </div>
+            </div>
+
+      </div>
+      </div>
+      
+      <div id="carouselExampleControls" data-aos="fade-right" class="carousel slide logged-out" data-bs-ride="carousel">
+            <div class="carousel-inner">
+            <div class="carousel-item active text-center">
+                  <img src="https://c.stocksy.com/a/Q7I200/z9/546308.jpg" class="rounded" alt="...">
+            </div>
+            
+            <div class="carousel-item text-center">
+                  <img src="https://empleosurgentes.com/wp-content/uploads/2020/08/nanny-babysitter-ni%C3%B1era-externa-empleo-de-ni%C3%B1era-media-jornada.jpg" class="rounded" alt="...">
+                  </div>
+                  
+                  <div class="carousel-item text-center">
+                        <img src="https://serena-care.com/wp-content/uploads/2020/11/Nineras-certificadas.jpg" class="rounded" alt="...">
+                  </div>
+                  </div>
+                  
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                  </button>
+
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+            </div>
+      </div>
+
+      <!-- <div class="container-fluid bg-light py-5 logged-in">
+      <div class="container">
+            <div class="row">
+            <div class="col-12 col-md-4">
+                  <a name="servicios"></a>
+                  <img {margin: 20px; height: 30%; width: 100%;} src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1051&q=80" alt="Imagen1" class="w-100 rounded shadow">
+                  <hr>
+                  <h2 class="p-3">Escritorios</h2>
+                  <p>Escritorio color blanco satinado</p>
+                  <p>Evite exponerlo a la humedad ya que podría causar su deteroración, es por ello que es solo para interiores.</p>
+                  <p>Precio $3,000</p>
+            </div>
+            
+            <div class="col-12 col-md-4">
+                  <img {margin: 20px; height: 30%; width: 100%;} src="https://images.unsplash.com/photo-1552975084-6e027cd345c2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80" alt="Imagen2" class="w-100 rounded shadow">
+                  <h2 class="p-3">Mubeles para tv</h2>
+                  <p>Mueble para tv estilo rústico</p>
+                  <p>Precio $3,100</p>
+            </div>
+            <div class="col-12 col-md-4">
+                  <img {margin: 20px; height: 30%; width: 100%;} src="https://images.unsplash.com/photo-1574739782594-db4ead022697?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Imagen3" class="w-100 rounded shadow">
+                  <hr>
+                  <h2 class="p-3">Cocinas integrales</h2>
+                  <p>Cocina integral muy completa en color blanco, estilo moderno</p>
+                  <p>Incluye instalacion</p>
+                  <P>Precio $32,150</P>
+            </div>
+            </div>
+      </div>
+      </div> -->
+
+      <div class="container-fluid py-5 logged-in">
+      <div class="container">
+            <div class="row">
+            <div class="col-12">
+                  <a name="mapadeubicacion"></a>
+                  <h2 class="text-center">MAPA DE UBICACIÓN</h2>
+                  <div id="mapa"></div>
+            </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="container-fluid bg-dark py-5">
+      <div class="container">
+            <div class="row">
+            <div class="col-12">
+                  <h3 class="text-white">Pie de página</h3>
+                  <p class="text-white">Contáctanos. tel 4778538444. correo karenlopez91931@gmail.com</p>
+            </div>
+            </div>
+      </div>
+      </div>
+
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+      
+      <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+          apiKey: "AIzaSyCxJCoIJRM7vhdv064BHGan54p11bouEgY",
+          authDomain: "geoparcial3.firebaseapp.com",
+          projectId: "geoparcial3",
+          storageBucket: "geoparcial3.appspot.com",
+          messagingSenderId: "802813541289",
+          appId: "1:802813541289:web:203fddca3398a25245a2b8",
+          measurementId: "G-PS01DFKRY1"
+      };
+        
+      // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+      </script>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+      <!-- Google Maps -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv-m46ebIV9fqkE2fIBGeWunmGmBm2R24&callback=iniciaMapa" async defer></script>
+
+      <!-- AOS -->
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+      <script>
+      AOS.init();
+
+      function iniciaMapa() {
+            var coordenadas = {
+                  lat : 21.152639, lng : -101.711598
+            }
+
+            var map = new google.maps.Map(document.getElementById('mapa'),
+            {
+                  center : coordenadas,
+                  zoom : 15 
+            }
+            ); 
+      }
+      </script>
+
+      <script src="scripts/autorizacion.js" ></script>
+      <script src="scripts/index.js"></script>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
