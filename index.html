@@ -250,12 +250,24 @@
             <div class="row">
             <div class="col-12">
                   <a name="mapadeubicacion"></a>
-                  <h2 class="text-center">MAPA DE UBICACIÓN</h2>
+                  <h3>Google Maps Idiomas</h3>
                   <div id="mapa"></div>
             </div>
+            <div class="col-6 text-center">
+                  <br>
+                  <select name="idioma" id="idioma" class="form-control" onchange="this.form.submit()">
+                      <option value="es">Español</option>
+                      <option value="en">Inglés</option>
+                      <option value="it">Italiano</option>
+                      <option value="zh">Chino</option>
+                      <option value="ja">Japonés</option>
+                  </select>
+              </div>
       </div>
       </div>
       </div>
+
+      
 
       <div class="row p-2 logged-in">
             <div class="container">
@@ -336,10 +348,42 @@
       }
       </script>
 
-<script>
+
+      <script>
       var coordenadas = {
-                  lat: -31.563910, lng: 147.154312
-          }
+            lat: -31.563910, lng: 147.154312
+      }
+
+      const queryString = window.location.search;
+
+      const urlParams = new URLSearchParams(queryString);
+      const idioma = urlParams.get('idioma');
+
+      document.getElementById('idioma').value=idioma;
+
+      console.log(idioma);
+
+      var script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAv-m46ebIV9fqkE2fIBGeWunmGmBm2R24&callback=iniciaMapa&language=' + idioma;
+      document.head.appendChild(script);
+
+      function iniciaMapa() {
+          var map = new google.maps.Map(
+          document.getElementById('mapa'),
+              {
+                  center: coordenadas,
+                  zoom: 3
+              }
+          );
+      }
+
+      </script>
+
+
+      <script>
+      var coordenadas = {
+            lat: -31.563910, lng: 147.154312
+      }
 
 
       var localidades = [
